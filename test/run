@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 # See README.md for info on running these tests.
 
+testAllEngines() {
+  compile "all-engines"
+  assertCapturedSuccess
+}
+
 testNoVersion() {
   compile "no-version"
   assertCaptured "engines.node (package.json):  unspecified"
-  assertCaptured "Resolving node version 6.x via semver.io"
+  assertCaptured "Resolving node version 6.x"
   assertCaptured "Downloading and installing node 6."
   assertCapturedSuccess
 }
@@ -84,7 +89,7 @@ testCacheWithPrebuild() {
 testYarnSemver() {
   compile "yarn-semver"
   assertCaptured "Resolving yarn version ~0.17"
-  assertCaptured "installing yarn (0.17."
+  assertCaptured "installing yarn 0.17."
   assertCapturedSuccess
 }
 
@@ -97,7 +102,7 @@ testYarnRun() {
 
 testYarnEngine() {
   compile "yarn-engine"
-  assertCaptured "installing yarn (0.16.1)"
+  assertCaptured "installing yarn 0.16.1"
   assertCapturedSuccess
 }
 
@@ -259,10 +264,8 @@ testUntrackedDependencies() {
 
 testBadJson() {
   compile "bad-json"
-  assertCaptured "Build failed"
-  assertCaptured "We're sorry this build is failing"
   assertNotCaptured "Installing binaries"
-  assertCapturedError 1 "Unable to parse"
+  assertCapturedError 1 "This project's package.json file has invalid syntax"
 }
 
 testBuildWithUserCacheDirectoriesCamel() {
@@ -319,15 +322,15 @@ testConcurrencyCustomLimit() {
 
 testInvalidNode() {
   compile "invalid-node"
-  assertCaptured "Downloading and installing node 0.11.333"
-  assertCaptured "Unable to download node 0.11.333"
+  assertCaptured "Resolving node version 0.11.333"
+  assertCaptured "Unable to resolve"
   assertCapturedError
 }
 
 testInvalidIo() {
   compile "invalid-io"
-  assertCaptured "Downloading and installing iojs 2.0.99"
-  assertCaptured "Unable to download iojs 2.0.99"
+  assertCaptured "Resolving iojs version 2.0.99"
+  assertCaptured "Unable to resolve"
   assertCapturedError
 }
 
@@ -380,7 +383,6 @@ testIoJs() {
 
 testSpecificVersion() {
   compile "specific-version"
-  assertNotCaptured "Resolving node version"
   assertCaptured "Downloading and installing node 0.10.29"
   assertCaptured "Using default npm version: 1.4.14"
   assertCapturedSuccess
@@ -395,7 +397,7 @@ testStableVersion() {
 
 testUnstableVersion() {
   compile "unstable-version"
-  assertCaptured "Resolving node version 0.11.x via semver.io"
+  assertCaptured "Resolving node version 0.11.x"
   assertCaptured "Downloading and installing node 0.11."
   assertCapturedSuccess
 }
@@ -414,7 +416,7 @@ testOldNpm2() {
 
 testNonexistentNpm() {
   compile "nonexistent-npm"
-  assertCaptured "version not found: npm@1.1.65"
+  assertCaptured "Unable to install npm 1.1.65; does it exist?"
   assertCapturedError 1 ""
 }
 
@@ -426,14 +428,13 @@ testSameNpm() {
 
 testNpmVersionRange() {
   compile "npm-version-range"
-  assertCaptured "Resolving npm version"
-  assertCaptured "installing npm 1.4."
+  assertCaptured "Bootstrapping npm 1.4."
   assertCapturedSuccess
 }
 
 testNpmVersionSpecific() {
   compile "npm-version-specific"
-  assertCaptured "installing npm 2.1.11"
+  assertCaptured "Bootstrapping npm 2.1.11"
   assertNotCaptured "Resolving npm version"
   assertNotCaptured "WARNING"
   assertCapturedSuccess
