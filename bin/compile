@@ -32,16 +32,10 @@ source $BP_DIR/lib/binaries.sh
 source $BP_DIR/lib/cache.sh
 source $BP_DIR/lib/dependencies.sh
 
-<<<<<<< HEAD
 export PATH="$BUILD_DIR/.heroku/node/bin:$BUILD_DIR/.heroku/yarn/bin":$PATH
 
 LOG_FILE=$(mktemp -t node-build-log.XXXXX)
 echo "" > "$LOG_FILE"
-=======
-### Check invalid package.json before adding an error trap
-
-fail_invalid_package_json "$BUILD_DIR"
->>>>>>> tests and implementation for using the nodebin service
 
 ### Handle errors
 
@@ -64,13 +58,10 @@ trap 'handle_failure' ERR
 
 ### Warnings that should be caught immediately
 
-<<<<<<< HEAD
 fail_dot_heroku "$BUILD_DIR"
 fail_dot_heroku_node "$BUILD_DIR"
 fail_invalid_package_json "$BUILD_DIR"
 fail_yarn_and_npm_lockfiles "$BUILD_DIR"
-=======
->>>>>>> tests and implementation for using the nodebin service
 warn_prebuilt_modules "$BUILD_DIR"
 warn_missing_package_json "$BUILD_DIR"
 
