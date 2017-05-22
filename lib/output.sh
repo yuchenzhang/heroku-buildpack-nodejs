@@ -23,7 +23,7 @@ warn() {
   local suggestion=${2:-https://devcenter.heroku.com/articles/nodejs-support}
   echo "" || true
   echo -e "\033[93m\033[1m\033[40m=!= $message\033[0m" || true
-  echo "$suggestion"
+  echo -e "\033[93m\033[1m\033[40m=!= $suggestion\033[0m" || true
 }
 
 error() {
