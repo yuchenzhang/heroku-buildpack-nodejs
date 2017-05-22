@@ -74,9 +74,8 @@ warning() {
 warn() {
   local tip=${1:-}
   local url=${2:-https://devcenter.heroku.com/articles/nodejs-support}
-  echo " !     $tip" || true
-  echo "       $url" || true
-  echo ""
+  puts_warn "$tip"
+  echo "$url"
 }
 
 warn_node_engine() {

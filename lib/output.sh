@@ -8,17 +8,15 @@ output() {
 
   while read LINE;
   do
-    echo "       $LINE" || true
+    echo "$LINE" || true
     echo "$LINE" >> "$logfile" || true
   done
 }
 
 header() {
-  echo "" || true
-  echo "-----> $*" || true
+  puts_step "$*"
 }
 
 error() {
-  echo " !     $*" >&2 || true
-  echo "" || true
+  puts_error "$*" >&2
 }
