@@ -1,5 +1,5 @@
 info() {
-  echo "       $*" || true
+  echo "$*" || true
 }
 
 # format output and send a copy to the log
@@ -14,9 +14,19 @@ output() {
 }
 
 header() {
-  puts_step "$*"
+  echo "" || true
+  echo -e "\033[96m\033[1m\033[40m=== $*\033[0m" || true
+}
+
+warn() {
+  local message=${1:-}
+  local suggestion=${2:-https://devcenter.heroku.com/articles/nodejs-support}
+  echo "" || true
+  echo -e "\033[93m\033[1m\033[40m=!= $message\033[0m" || true
+  echo "$suggestion"
 }
 
 error() {
-  puts_error "$*" >&2
+  echo "" || true
+  echo -e "\033[91m\033[1m\033[40m=!= $*\033[0m" || true
 }
