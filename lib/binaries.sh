@@ -39,9 +39,9 @@ install_nodejs() {
   # local code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.tar.gz --write-out "%{http_code}")
   # if [ "$code" != "200" ]; then
     # echo "Unable to download node: $code"
-    echo "Copying predownloaded /tmp/node-$version-$platform.tar.gz"
-    if [ -e /tmp/node-$version-$platform.tar.gz ]; then
-      cp /tmp/node-$version-$platform.tar.gz /tmp/node.tar.gz
+    echo "Copying predownloaded /tmp/node-$number-$platform.tar.gz"
+    if [ -e /tmp/node-$number-$platform.tar.gz ]; then
+      cp /tmp/node-$number-$platform.tar.gz /tmp/node.tar.gz
     else
       false
     fi
