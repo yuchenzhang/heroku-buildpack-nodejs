@@ -35,7 +35,7 @@ install_nodejs() {
     fail_bin_install node $version;
   fi
 
-  echo "Downloading and installing node $number..."
+  echo "Downloading and installing node $number from $url..."
   local code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.tar.gz --write-out "%{http_code}")
   if [ "$code" != "200" ]; then
     echo "Unable to download node: $code" && false
