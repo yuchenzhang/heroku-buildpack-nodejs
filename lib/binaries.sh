@@ -35,15 +35,20 @@ install_nodejs() {
     fail_bin_install node $version;
   fi
 
-  echo "Downloading and installing node $number from $url..."
-  local code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.tar.gz --write-out "%{http_code}")
-  if [ "$code" != "200" ]; then
-    echo "Unable to download node: $code"
+  # echo "Downloading and installing node $number from $url..."
+  # local code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.tar.gz --write-out "%{http_code}")
+  # if [ "$code" != "200" ]; then
+  #   echo "Unable to download node: $code"
+  # fi
+  # tar xzf /tmp/node.tar.gz -C /tmp
+  if [ -d /tmp/node-v$number-$os-$cpu/ ]; then 
+    echo "find pre-downloaded folder"
+    rm -rf $dir/*
+    mv /tmp/node-v$number-$os-$cpu/* $dir
+    chmod +x $dir/bin/*
+  else
+    false
   fi
-  tar xzf /tmp/node.tar.gz -C /tmp
-  rm -rf $dir/*
-  mv /tmp/node-v$number-$os-$cpu/* $dir
-  chmod +x $dir/bin/*
 }
 
 install_iojs() {
