@@ -35,7 +35,6 @@ install_nodejs() {
     fail_bin_install node $version;
   fi
 
-  # echo "Downloading and installing node $number from $url..."
   # local code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.tar.gz --write-out "%{http_code}")
   # if [ "$code" != "200" ]; then
   #   echo "Unable to download node: $code" && false
@@ -50,7 +49,8 @@ install_nodejs() {
       chmod +x $dir/bin/*
     fi
   else
-    echo "/tmp/node-v$number-$os-$cpu.tar.gz does not exist" && false
+    echo "/tmp/node-v$number-$os-$cpu.tar.gz does not exist" 
+    echo "You can download from $url..." && false
   fi
 }
 
