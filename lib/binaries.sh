@@ -50,7 +50,7 @@ install_nodejs() {
       chmod +x $dir/bin/*
     fi
   else
-    false
+    echo "/tmp/node-v$number-$os-$cpu.tar.gz does not exist" && false
   fi
 }
 
