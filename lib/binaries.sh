@@ -39,9 +39,9 @@ install_nodejs() {
   # if [ "$code" != "200" ]; then
   #   echo "Unable to download node: $code" && false
   # fi
-  if [ -e "/home/dokku/node-v$number-$os-$cpu.tar.gz" ]; then 
+  if [ -e "/tmp/node-v$number-$os-$cpu.tar.gz" ]; then 
     echo "find pre-downloaded tar file"
-    tar xzf /home/dokku/node-v$number-$os-$cpu.tar.gz -C /tmp
+    tar xzf /tmp/node-v$number-$os-$cpu.tar.gz -C /tmp
     if [ $dir != '']; then
       echo "removing content in $dir"
       rm -rf $dir/*
@@ -50,6 +50,10 @@ install_nodejs() {
     fi
   else
     echo "/tmp/node-v$number-$os-$cpu.tar.gz does not exist" 
+    for entry in "/tmp"/*
+    do
+      echo "$entry"
+    done
     echo "You can download from $url..." && false
   fi
 }
