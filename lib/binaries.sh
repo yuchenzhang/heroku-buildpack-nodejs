@@ -35,26 +35,22 @@ install_nodejs() {
     fail_bin_install node $version;
   fi
 
-  # local code=$(curl "$url" -L --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.tar.gz --write-out "%{http_code}")
-  # if [ "$code" != "200" ]; then
-  #   echo "Unable to download node: $code" && false
-  # fi
-  if [ -e "/home/dokku/node-v$number-$os-$cpu.tar.gz" ]; then 
-    echo "find pre-downloaded tar file"
-    tar xzf /home/dokku/node-v$number-$os-$cpu.tar.gz -C /tmp
-    if [ $dir != '']; then
+  aihehuo_url="http://aihehuo.b0.upaiyun.com/default/binaries/node-v$number-$os-$cpu.tar.gz"
+  local code=$(curl "$aihehuo_url" -L --silent --fail --retry 5 --retry-max-time 15 -o /tmp/node.tar.gz --write-out "%{http_code}")
+  if [ "$code" != "200" ]; then
+    echo "Unable to download node: $code" 
+    echo "You can download from $url..." && false
+  fi
+  if [ -e /tmp/node.tar.gz ]; then  
+    tar xzf /tmp/node.tar.gz -C /tmp
+    if [ $dir != '' ]; then
       echo "removing content in $dir"
       rm -rf $dir/*
       mv /tmp/node-v$number-$os-$cpu/* $dir
       chmod +x $dir/bin/*
     fi
   else
-    echo "/home/dokku/node-v$number-$os-$cpu.tar.gz does not exist" 
-    for entry in "/home/dokku"/*
-    do
-      echo "$entry"
-    done
-    echo "You can download from $url..." && false
+    echo "file /tmp/node.tar.gz does not exist!" && false
   fi
 }
 
